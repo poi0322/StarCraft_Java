@@ -1,14 +1,13 @@
 package com.poi.game;
 
-import com.poi.building.Building;
-import com.poi.building.CommandCenter;
+import com.poi.unit.Unit;
 
 import java.util.Scanner;
 
 import static com.poi.game.Cui.*;
 
 public class Game {
-    private static void setup(){
+    private static void setup() {
         unitManager.setPopulation(DEFAULT_POPULATION);
 
     }
@@ -18,15 +17,15 @@ public class Game {
         setup();
         start();
         Scanner scanner = new Scanner(System.in);
-        while (true){
+        while (true) {
             int order = 0;
             mainMenu();
             order = scanner.nextInt();
-            switch (order){
+            switch (order) {
                 case BUILD:
                     buildMenu();
                     order = scanner.nextInt();
-                    switch (order){
+                    switch (order) {
                         case CommandCenter:
                             buildingManager.buildCommandCenter();
                             break;
@@ -49,13 +48,15 @@ public class Game {
                 case GENERATE:
                     generateMenu();
                     order = scanner.nextInt();
-                    switch (order){
+                    switch (order) {
                         case SCV:
                         case MEDIC:
                         case FIREBAT:
                         case MARIN:
-                            if(buildingManager.isGenerate(order)){
-                                unitManager.unitProduction(order);
+                            if (buildingManager.isGenerate(order)) {
+                                Unit unit = unitManager.unitProduce(order);
+                                unit.printUnitInfo();
+                                unitManager.pushUnitList(unit);
                             }
                             break;
                         default:

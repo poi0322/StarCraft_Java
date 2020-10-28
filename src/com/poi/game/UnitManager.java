@@ -19,30 +19,27 @@ public class UnitManager {
         printPopulation();
     }
 
-    public void unitProduction(int name) {
-        Unit unit = null;
+    // Factory Method
+    public Unit unitProduce(int name) {
         switch (name) {
             case SCV:
-                unit = new Scv();
-                break;
+                return new Scv();
             case MARIN:
-                unit = new Marin();
-                break;
+                return new Marin();
             case FIREBAT:
-                unit = new Firebat();
-                break;
+                return new Firebat();
             case MEDIC:
-                unit = new Medic();
-                break;
+                return new Medic();
         }
+        return null;
+    }
 
-        assert unit != null;
-        unit.printUnitInfo();
-
+    public void pushUnitList(Unit unit) {
         if (totalUnitPopulation + unit.unitPopulation <= maximumPopulation) {
             units.add(unit);
             totalUnitPopulation += unit.unitPopulation;
-        } else {
+        }
+        else {
             System.out.println("Cannot create more units");
         }
         printPopulation();
@@ -52,7 +49,8 @@ public class UnitManager {
         int i = 0;
         if (units.isEmpty()) {
             System.out.println("No Unit's");
-        } else {
+        }
+        else {
             for (Unit unit : units) {
                 i++;
                 unit.printUnitInfo(i);
